@@ -32,6 +32,6 @@ Notes
 Known Bugs
 --------
 * py2app without alias mode doesn't work 
-
+* Editing User in the APP while starting it from the console doesn't work. Just edit in the text field and restart.
 * VotingPower has often a delay of a few hours - is a problem with the api (see: https://playground.steem.vc/#d5e8256d26f3f8ee59eb44d0b0df00c6)
 * Ater some time the timer might stop working - try to "Update Manually" and see if that works or quit & restart
