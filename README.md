@@ -18,15 +18,16 @@ If this doesn't work - try
 
     python3 votingpowerbar.py
     
-You can also use py2app but currently only the alias mode works (this won't create a standalone to share). 
-Install py2app e.g. via pip - first (https://py2app.readthedocs.io/en/latest/install.html#installing-with-pip) and then:
+You can also use py2app but currently only the alias mode works (this won't create a standalone to share - only on your local machine). 
+Install py2app (e.g. via pip)first: (https://py2app.readthedocs.io/en/latest/install.html#installing-with-pip) and then:
 
       pyton setup.py py2app -A
     
 
 Notes
 --------
-* If you want to change the user name you can either enter the data.txt directly or simply click on "Change Name"
+* If you want to change the user name you can either enter the data.txt directly or simply click on "Change Name". However if you start from the console - you have to edit it in data.txt.
+* If you have any custom wishes - let me know!
 
 
 Known Bugs
