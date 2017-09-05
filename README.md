@@ -1,4 +1,4 @@
-# votingpowerbar
+# Voting Power Bar Python Script App for MacOSX
 Python Script for displaying VotingPower % of specific Steem User in the MenuBar
 
 Required
