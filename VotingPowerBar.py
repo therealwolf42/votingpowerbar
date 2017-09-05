@@ -2,12 +2,9 @@ import os
 import rumps
 import time
 from steem import Steem
+from decimal import Decimal
 
 rumps.debug_mode(True)
-
-def secondsToText(seconds):
-    hours, minutes = divmod(seconds, 3600)
-    return str(hours + ":" + minutes)
 
 def openAndWriteFile(tempuser):
     f = open("data.txt","w")
@@ -31,42 +28,16 @@ def getSteemPower(tempuser):
     return Steem().get_account(tempuser)['voting_power'] / 100
 
 
-def calcSteempower(tempuser,boolInit):
-    toFill = 100 - getSteemPower(tempuser)
-    timeString = ""
-        
-    minToFill = round(toFill / (20/24/60),2)
-    hourToFill = round(toFill / (20/24),2)
-    dayToFill = round(toFill / 20,2)
-    if hourToFill < 1:
-        if minToFill < 45:
-            stringFill = "<45m"
-        elif minToFill < 30:
-            stringFill = "<30m"
-        elif minToFill < 15:
-            stringFill = "<15m" 
-        elif minToFill < 5:
-            stringFill = "<5m"
-        elif minToFill <= 0:
-            stringFill = "~0m"
-        else:
-            stringFill = "<1h"
-    else:
-        hourToFill = round(toFill / (20/24))
-        stringFill = "~" + str(hourToFill) + "h"
 
-    return str(getSteemPower(tempuser)) + "% (" + stringFill + timeString + ")" 
-
-
-firstCalc = True
-startFill = 0
-timeStart = 0
-timeNow = 0
-timeString = ""
 
 class VotingPowerApp(rumps.App):
     globaluser = ''
     clicktext = 'Name'
+    newCalc = True
+    startFill = 0
+    timeStart = 0
+    timeNow = 0
+    timeString = ""
     def __init__(self): 
         self.globaluser = globaluser = clicktext = readFile()
         if not self.globaluser:
@@ -74,7 +45,7 @@ class VotingPowerApp(rumps.App):
             clicktext = "SteemUser"
             titleValue = "Enter SteemName"
         else:
-            titleValue = calcSteempower(self.globaluser,True)
+            titleValue = self.calcSteempower(self.globaluser,True)
             
         super(VotingPowerApp, self).__init__(titleValue)
 
@@ -89,32 +60,60 @@ class VotingPowerApp(rumps.App):
             if self.globaluser == '':
                 self.title = 'Enter SteemName'
             else:    
-                self.title = calcSteempower(self.globaluser,False)
+                self.title = self.calcSteempower(self.globaluser,False)
+
 
     @rumps.clicked("Update Manually")
     def updatePower(self,_):
-        self.title = calcSteempower(self.globaluser,False)
+        self.title = self.calcSteempower(self.globaluser,False)
         
-    @rumps.timer(10)
+    @rumps.timer(5)
     def ticker(self, _):
-        self.title = calcSteempower(self.globaluser,False)
+        self.title = self.calcSteempower(self.globaluser,False)
+
+
+    def calcSteempower(self,tempuser,boolInit):
+        toFill = 100 - getSteemPower(tempuser)
+        secToFill = Decimal(toFill / (20/24/60/60)).quantize(Decimal("0.1"))   
+        minToFill = Decimal(toFill / (20/24/60)).quantize(Decimal("0.1"))
+        hourToFill = Decimal(toFill / (20/24)).quantize(Decimal("0.1"))
+        dayToFill = Decimal(toFill / 20).quantize(Decimal("0.1"))
+
+        print(toFill)
+        timeString = ""
+        print(self.startFill)
+        if self.newCalc == True or toFill != self.startFill:
+            print("New Calc")
+            self.startFill = toFill
+            self.newCalc = False
+            self.timeStart = time.time()
+        else:
+            timeNow = time.time() - self.timeStart
+            print(timeNow)
+            timeString = "|" + str(Decimal(timeNow / 60 / 60).quantize(Decimal("0.1"))) + "h|" +  str(Decimal(timeNow / 60 * (20/24/60)).quantize(Decimal("0.01"))) + "%"
+            print(timeString)        
+            
+        
+        if hourToFill < 1:
+            if minToFill < 45:
+                stringFill = "<45m"
+            elif minToFill < 30:
+                stringFill = "<30m"
+            elif minToFill < 15:
+                stringFill = "<15m" 
+            elif minToFill < 5:
+                stringFill = "<5m"
+            elif minToFill <= 0:
+                stringFill = "~0m"
+            else:
+                stringFill = "<1h"
+        else:
+            hourToFill = Decimal(toFill / (20/24)).quantize(Decimal("0.1"))
+            stringFill = "~" + str(hourToFill) + "h"
+
+        return str(getSteemPower(tempuser)) + "% (" + stringFill + timeString + ")" 
+
 
 
 if __name__ == "__main__":
     VotingPowerApp().run()
-
-
-"""
-This is not yet working
-def calcTime():
-    if firstCalc == True or toFill != startFill:
-        print("First Calc =" + firstCalc)
-        print(toFill + " / " + startFill)
-        startFill = toFill
-        firstCalc = False
-        timeStart = time.time()
-    else:
-        timeNow = time.time() - timeStart
-        timeString = "|" + secondsToText(timeNow)
-        print(timeString)
-"""
