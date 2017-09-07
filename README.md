@@ -1,6 +1,10 @@
 # VotingPowerBar Python App for MacOSX
 Python Script for displaying VotingPower % of specific Steem User in the MenuBar
 
+
+![](https://github.com/therealwolf42/votingpowerbar/blob/master/example.gif)
+
+
 Required
 --------
 * Python 3 (https://www.python.org/downloads/)
@@ -26,7 +30,7 @@ Install py2app (e.g. via pip)first: (https://py2app.readthedocs.io/en/latest/ins
 
 Notes
 --------
-* If you want to change the user names (max. 5 currently supported) you can either enter the data.txt directly or simply click on "Change Name". However if you start from the console - you have to edit it in data.txt
+* If you want to change the usernames (max. 5 currently supported) just edit the data.txt directly.
 * If you think that the timer might stop working you can 
 1.) activate debug mode (just uncomment 'rumps.debug_mode(True)') 
 2.) Update manually.
@@ -36,4 +40,4 @@ Notes
 Known Bugs
 --------
 * py2app standalone build does not work / Works only via alias mode
-* Editing Users in the APP while starting it from the console doesn't work. Thus I commented it out. Just edit in the text field and restart.
+* Editing Users in the APP while starting it from the console doesn't work and doesn't support multiple accounts. Thus I commented it out. Just edit in the text field and restart.
