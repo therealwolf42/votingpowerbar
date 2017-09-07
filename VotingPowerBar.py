@@ -6,7 +6,7 @@ import time
 from steem import Steem
 
 
-"""rumps.debug_mode(True)"""
+rumps.debug_mode(True)
 
 def openAndWriteFile(tempuser):
     f = open("data.txt","w")
@@ -108,22 +108,28 @@ class VotingPowerApp(rumps.App):
 
 
     def calcSteempower(self,tempuser):
+        hourToFill = 100/20/24
+        minToFill = 100/20/24/60
         lastVoteTime = dateToString(getLastVoteTime(tempuser))
         timeNow = dateToString(datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S"))
         delta = timeNow - lastVoteTime
         steempower = (getSteemPower(tempuser) + (10000 * delta.total_seconds() / 432000))/100
         if steempower <= 100:
             toFill = 100 - steempower
-            perHour = 20/24
-            timeToFill = toFill/perHour
+            timeToFillHour = toFill/(20/24)
             timeConst = "h"
-            if timeToFill < 1:
-                timeToFill = toFill/perHour/60
+            if timeToFillHour < 1:
+                timeToFillMin = toFill/(20/24/60)
+                print(timeToFillMin)
                 timeConst = "m"
+                timeToFillMin = Decimal(timeToFillMin).quantize(Decimal("0.1"))
+                stringFill = " (" + str(timeToFillMin) + timeConst + ")"
+                steempower = Decimal(steempower).quantize(Decimal("0.1"))
+
             else:
-                hourToFill = Decimal(toFill / (20/24)).quantize(Decimal("0.1"))
-                timeToFill = Decimal(timeToFill).quantize(Decimal("0.1"))
-                stringFill = " (" + str(timeToFill) + timeConst + ")"
+                """hourToFill = Decimal(toFill / (20/24)).quantize(Decimal("0.1"))"""
+                timeToFillHour = Decimal(timeToFillHour).quantize(Decimal("0.1"))
+                stringFill = " (" + str(timeToFillHour) + timeConst + ")"
                 steempower = Decimal(steempower).quantize(Decimal("0.1"))
         else:
             steempower = 100
