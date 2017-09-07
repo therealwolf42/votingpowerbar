@@ -25,7 +25,7 @@ If this doesn't work - try
 You can also use py2app but currently only the alias mode works (this won't create a standalone to share - only on your local machine). 
 Install py2app (e.g. via pip)first: (https://py2app.readthedocs.io/en/latest/install.html#installing-with-pip) and then:
 
-      pyton setup.py py2app -A
+      python setup.py py2app -A
     
 
 Notes
