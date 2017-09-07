@@ -1,20 +1,38 @@
 # VotingPowerBar Python App for MacOSX
 Python Script for displaying VotingPower % of specific Steem User in the MenuBar
 
+Live Example
+--------
 
-![](https://github.com/therealwolf42/votingpowerbar/blob/master/example.gif)
+![](https://github.com/therealwolf42/votingpowerbar/blob/master/votebar_action.gif)
 
+User Example
+--------
+![](https://github.com/therealwolf42/votingpowerbar/blob/master/votebar_accounts.gif)
 
 Required
 --------
 * Python 3 (https://www.python.org/downloads/)
+* pip (should be part of python)
 * Steem (https://github.com/steemit/steem-python)
 * rumps (https://github.com/jaredks/rumps)
 
 
 How-To
 --------
-Install Python3, Steem and rumps and then enter
+1.) Open terminal and go to the folder for the bot.
+
+2.) Install Python3 (from link)
+
+3.) Install steem
+
+        pip install -U steem
+        
+4.) Install rumps
+
+    pip install rumps
+    
+5.) Start the script
 
     python votingpowerbar.py
 
@@ -32,8 +50,11 @@ Notes
 --------
 * If you want to change the usernames (max. 5 currently supported) just edit the data.txt directly.
 * If you think that the timer might stop working you can 
+
 1.) activate debug mode (just uncomment 'rumps.debug_mode(True)') 
+
 2.) Update manually.
+
 * If you have any custom wishes - let me know!
 
 
