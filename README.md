@@ -26,13 +26,14 @@ Install py2app (e.g. via pip)first: (https://py2app.readthedocs.io/en/latest/ins
 
 Notes
 --------
-* If you want to change the user name you can either enter the data.txt directly or simply click on "Change Name". However if you start from the console - you have to edit it in data.txt.
+* If you want to change the user names (max. 5 currently supported) you can either enter the data.txt directly or simply click on "Change Name". However if you start from the console - you have to edit it in data.txt
+* If you think that the timer might stop working you can 
+1.) activate debug mode (just uncomment 'rumps.debug_mode(True)') 
+2.) Update manually.
 * If you have any custom wishes - let me know!
 
 
 Known Bugs
 --------
-* py2app without alias mode doesn't work 
-* Editing User in the APP while starting it from the console doesn't work. Just edit in the text field and restart.
-* VotingPower has often a delay of a few hours - is a problem with the api (see: https://playground.steem.vc/#d5e8256d26f3f8ee59eb44d0b0df00c6)
-* Ater some time the timer might stop working - try to "Update Manually" and see if that works or quit & restart
+* py2app standalone build does not work / Works only via alias mode
+* Editing Users in the APP while starting it from the console doesn't work. Thus I commented it out. Just edit in the text field and restart.
