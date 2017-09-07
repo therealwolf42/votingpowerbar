@@ -6,7 +6,7 @@ import time
 from steem import Steem
 
 
-rumps.debug_mode(True)
+"""rumps.debug_mode(True)"""
 
 def openAndWriteFile(tempuser):
     f = open("data.txt","w")
